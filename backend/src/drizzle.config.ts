@@ -9,7 +9,7 @@ export default defineConfig({
     port: 5432,
     database: "mydb",
     user: "postgres",
-    password: "test123",
+    password: "postgres",
     ssl: false,
   },
 });
