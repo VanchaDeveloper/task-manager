@@ -1,0 +1,89 @@
+# ===============================
+# Node / Package Managers
+# ===============================
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# ===============================
+# Environment Variables
+# ===============================
+.env
+.env.*
+!.env.example
+
+# ===============================
+# TypeScript
+# ===============================
+dist/
+build/
+*.tsbuildinfo
+
+# ===============================
+# Logs
+# ===============================
+logs/
+*.log
+
+# ===============================
+# Runtime / Temp
+# ===============================
+tmp/
+temp/
+pids/
+*.pid
+*.seed
+*.pid.lock
+
+# ===============================
+# Test & Coverage
+# ===============================
+coverage/
+.nyc_output/
+test-results/
+
+# ===============================
+# Docker
+# ===============================
+.dockerignore
+docker-data/
+**/docker-data/
+
+# ===============================
+# PostgreSQL
+# ===============================
+postgres-data/
+pgdata/
+*.sql
+*.dump
+
+# ===============================
+# ORM / Migrations (optional)
+# ===============================
+# Prisma
+prisma/dev.db
+
+# TypeORM
+ormconfig.json
+
+# ===============================
+# Cache
+# ===============================
+.cache/
+.eslintcache
+
+# ===============================
+# OS
+# ===============================
+.DS_Store
+Thumbs.db
+
+# ===============================
+# Editor / IDE
+# ===============================
+.vscode/
+!.vscode/extensions.json
+.idea/
+*.iml
