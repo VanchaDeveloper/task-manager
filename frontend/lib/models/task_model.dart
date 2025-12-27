@@ -9,16 +9,19 @@ part 'task_model.freezed.dart';
 part 'task_model.g.dart';
 
 @freezed
-class TaskModel with _$TaskModel {
+abstract class TaskModel with _$TaskModel {
   const factory TaskModel({
     required String id,
     required String uid,
     required String title,
     required String description,
+    @JsonKey(fromJson: _dateFromJson, toJson: _dateToJson)
     required DateTime createdAt,
+    @JsonKey(fromJson: _dateFromJson, toJson: _dateToJson)
     required DateTime updatedAt,
+    @JsonKey(fromJson: _dateFromJson, toJson: _dateToJson)
     required DateTime dueAt,
-    @JsonKey(name: 'hexColor', fromJson: hexToRgb, toJson: rgbToHex)
+    @JsonKey(name: 'hexColor', fromJson: hexToColor, toJson: colorToHex)
     required Color color,
     required int isSynced,
   }) = _TaskModel;
@@ -26,3 +29,11 @@ class TaskModel with _$TaskModel {
   factory TaskModel.fromJson(Map<String, dynamic> json) =>
       _$TaskModelFromJson(json);
 }
+
+/// ---- JSON helpers ----
+
+DateTime _dateFromJson(String value) => DateTime.parse(value);
+String _dateToJson(DateTime date) => date.toIso8601String();
+
+Color hexToColor(String hex) => hexToRgb(hex);
+String colorToHex(Color color) => rgbToHex(color);

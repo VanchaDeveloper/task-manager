@@ -1,25 +1,45 @@
-import 'package:flutter/material.dart';
+import 'dart:ui';
 
+/// Increase or decrease color intensity
 Color strengthenColor(Color color, double factor) {
-  int r = (color.red * factor).clamp(0, 255).toInt();
-  int g = (color.green * factor).clamp(0, 255).toInt();
-  int b = (color.blue * factor).clamp(0, 255).toInt();
+  final r = (color.r * factor).clamp(0.0, 1.0);
+  final g = (color.g * factor).clamp(0.0, 1.0);
+  final b = (color.b * factor).clamp(0.0, 1.0);
 
-  return Color.fromARGB(color.alpha, r, g, b);
+  return Color.fromRGBO(
+    (r * 255).round(),
+    (g * 255).round(),
+    (b * 255).round(),
+    color.a,
+  );
 }
 
+/// Generate dates for a given week offset
 List<DateTime> generateWeekDates(int weekOffset) {
   final today = DateTime.now();
-  DateTime startOfWeek = today.subtract(Duration(days: today.weekday - 1));
-  startOfWeek = startOfWeek.add(Duration(days: weekOffset * 7));
+  final startOfWeek = today.subtract(
+    Duration(days: today.weekday - 1 + (weekOffset * 7)),
+  );
 
   return List.generate(7, (index) => startOfWeek.add(Duration(days: index)));
 }
 
+/// Convert Color → hex string (RRGGBB)
 String rgbToHex(Color color) {
-  return '${color.red.toRadixString(16).padLeft(2, '0')}${color.green.toRadixString(16).padLeft(2, '0')}${color.blue.toRadixString(16).padLeft(2, '0')}';
+  final r = (color.r * 255).round();
+  final g = (color.g * 255).round();
+  final b = (color.b * 255).round();
+
+  return r.toRadixString(16).padLeft(2, '0') +
+      g.toRadixString(16).padLeft(2, '0') +
+      b.toRadixString(16).padLeft(2, '0');
 }
 
+/// Convert hex string (RRGGBB or AARRGGBB) → Color
+/// Convert hex string (RRGGBB or AARRGGBB) → Color
 Color hexToRgb(String hex) {
-  return Color(int.parse(hex, radix: 16) + 0xFF000000);
+  final normalized = hex.replaceFirst('#', '');
+  final value = int.parse(normalized, radix: 16);
+
+  return normalized.length == 6 ? Color(0xFF000000 | value) : Color(value);
 }

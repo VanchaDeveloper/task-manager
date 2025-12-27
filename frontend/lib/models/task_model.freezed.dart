@@ -25,10 +25,13 @@ mixin _$TaskModel {
   String get uid => throw _privateConstructorUsedError;
   String get title => throw _privateConstructorUsedError;
   String get description => throw _privateConstructorUsedError;
+  @JsonKey(fromJson: _dateFromJson, toJson: _dateToJson)
   DateTime get createdAt => throw _privateConstructorUsedError;
+  @JsonKey(fromJson: _dateFromJson, toJson: _dateToJson)
   DateTime get updatedAt => throw _privateConstructorUsedError;
+  @JsonKey(fromJson: _dateFromJson, toJson: _dateToJson)
   DateTime get dueAt => throw _privateConstructorUsedError;
-  @JsonKey(name: 'hexColor', fromJson: hexToRgb, toJson: rgbToHex)
+  @JsonKey(name: 'hexColor', fromJson: hexToColor, toJson: colorToHex)
   Color get color => throw _privateConstructorUsedError;
   int get isSynced => throw _privateConstructorUsedError;
 
@@ -52,10 +55,10 @@ abstract class $TaskModelCopyWith<$Res> {
     String uid,
     String title,
     String description,
-    DateTime createdAt,
-    DateTime updatedAt,
-    DateTime dueAt,
-    @JsonKey(name: 'hexColor', fromJson: hexToRgb, toJson: rgbToHex)
+    @JsonKey(fromJson: _dateFromJson, toJson: _dateToJson) DateTime createdAt,
+    @JsonKey(fromJson: _dateFromJson, toJson: _dateToJson) DateTime updatedAt,
+    @JsonKey(fromJson: _dateFromJson, toJson: _dateToJson) DateTime dueAt,
+    @JsonKey(name: 'hexColor', fromJson: hexToColor, toJson: colorToHex)
     Color color,
     int isSynced,
   });
@@ -144,10 +147,10 @@ abstract class _$$TaskModelImplCopyWith<$Res>
     String uid,
     String title,
     String description,
-    DateTime createdAt,
-    DateTime updatedAt,
-    DateTime dueAt,
-    @JsonKey(name: 'hexColor', fromJson: hexToRgb, toJson: rgbToHex)
+    @JsonKey(fromJson: _dateFromJson, toJson: _dateToJson) DateTime createdAt,
+    @JsonKey(fromJson: _dateFromJson, toJson: _dateToJson) DateTime updatedAt,
+    @JsonKey(fromJson: _dateFromJson, toJson: _dateToJson) DateTime dueAt,
+    @JsonKey(name: 'hexColor', fromJson: hexToColor, toJson: colorToHex)
     Color color,
     int isSynced,
   });
@@ -228,10 +231,12 @@ class _$TaskModelImpl implements _TaskModel {
     required this.uid,
     required this.title,
     required this.description,
+    @JsonKey(fromJson: _dateFromJson, toJson: _dateToJson)
     required this.createdAt,
+    @JsonKey(fromJson: _dateFromJson, toJson: _dateToJson)
     required this.updatedAt,
-    required this.dueAt,
-    @JsonKey(name: 'hexColor', fromJson: hexToRgb, toJson: rgbToHex)
+    @JsonKey(fromJson: _dateFromJson, toJson: _dateToJson) required this.dueAt,
+    @JsonKey(name: 'hexColor', fromJson: hexToColor, toJson: colorToHex)
     required this.color,
     required this.isSynced,
   });
@@ -248,13 +253,16 @@ class _$TaskModelImpl implements _TaskModel {
   @override
   final String description;
   @override
+  @JsonKey(fromJson: _dateFromJson, toJson: _dateToJson)
   final DateTime createdAt;
   @override
+  @JsonKey(fromJson: _dateFromJson, toJson: _dateToJson)
   final DateTime updatedAt;
   @override
+  @JsonKey(fromJson: _dateFromJson, toJson: _dateToJson)
   final DateTime dueAt;
   @override
-  @JsonKey(name: 'hexColor', fromJson: hexToRgb, toJson: rgbToHex)
+  @JsonKey(name: 'hexColor', fromJson: hexToColor, toJson: colorToHex)
   final Color color;
   @override
   final int isSynced;
@@ -319,10 +327,13 @@ abstract class _TaskModel implements TaskModel {
     required final String uid,
     required final String title,
     required final String description,
+    @JsonKey(fromJson: _dateFromJson, toJson: _dateToJson)
     required final DateTime createdAt,
+    @JsonKey(fromJson: _dateFromJson, toJson: _dateToJson)
     required final DateTime updatedAt,
+    @JsonKey(fromJson: _dateFromJson, toJson: _dateToJson)
     required final DateTime dueAt,
-    @JsonKey(name: 'hexColor', fromJson: hexToRgb, toJson: rgbToHex)
+    @JsonKey(name: 'hexColor', fromJson: hexToColor, toJson: colorToHex)
     required final Color color,
     required final int isSynced,
   }) = _$TaskModelImpl;
@@ -339,13 +350,16 @@ abstract class _TaskModel implements TaskModel {
   @override
   String get description;
   @override
+  @JsonKey(fromJson: _dateFromJson, toJson: _dateToJson)
   DateTime get createdAt;
   @override
+  @JsonKey(fromJson: _dateFromJson, toJson: _dateToJson)
   DateTime get updatedAt;
   @override
+  @JsonKey(fromJson: _dateFromJson, toJson: _dateToJson)
   DateTime get dueAt;
   @override
-  @JsonKey(name: 'hexColor', fromJson: hexToRgb, toJson: rgbToHex)
+  @JsonKey(name: 'hexColor', fromJson: hexToColor, toJson: colorToHex)
   Color get color;
   @override
   int get isSynced;

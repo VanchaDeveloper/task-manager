@@ -12,10 +12,10 @@ _$TaskModelImpl _$$TaskModelImplFromJson(Map<String, dynamic> json) =>
       uid: json['uid'] as String,
       title: json['title'] as String,
       description: json['description'] as String,
-      createdAt: DateTime.parse(json['createdAt'] as String),
-      updatedAt: DateTime.parse(json['updatedAt'] as String),
-      dueAt: DateTime.parse(json['dueAt'] as String),
-      color: hexToRgb(json['hexColor'] as String),
+      createdAt: _dateFromJson(json['createdAt'] as String),
+      updatedAt: _dateFromJson(json['updatedAt'] as String),
+      dueAt: _dateFromJson(json['dueAt'] as String),
+      color: hexToColor(json['hexColor'] as String),
       isSynced: (json['isSynced'] as num).toInt(),
     );
 
@@ -25,9 +25,9 @@ Map<String, dynamic> _$$TaskModelImplToJson(_$TaskModelImpl instance) =>
       'uid': instance.uid,
       'title': instance.title,
       'description': instance.description,
-      'createdAt': instance.createdAt.toIso8601String(),
-      'updatedAt': instance.updatedAt.toIso8601String(),
-      'dueAt': instance.dueAt.toIso8601String(),
-      'hexColor': rgbToHex(instance.color),
+      'createdAt': _dateToJson(instance.createdAt),
+      'updatedAt': _dateToJson(instance.updatedAt),
+      'dueAt': _dateToJson(instance.dueAt),
+      'hexColor': colorToHex(instance.color),
       'isSynced': instance.isSynced,
     };

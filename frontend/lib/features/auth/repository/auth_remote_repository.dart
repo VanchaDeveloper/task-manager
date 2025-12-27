@@ -17,24 +17,16 @@ class AuthRemoteRepository {
   }) async {
     try {
       final res = await http.post(
-        Uri.parse(
-          '${Constants.backendUri}/auth/signup',
-        ),
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: jsonEncode({
-          'name': name,
-          'email': email,
-          'password': password,
-        }),
+        Uri.parse('${Constants.backendUri}/auth/signup'),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({'name': name, 'email': email, 'password': password}),
       );
 
       if (res.statusCode != 201) {
         throw jsonDecode(res.body)['error'];
       }
 
-      return UserModel.fromJson(res.body);
+      return UserModel.fromJson(jsonDecode(res.body) as Map<String, dynamic>);
     } catch (e) {
       throw e.toString();
     }
@@ -46,23 +38,16 @@ class AuthRemoteRepository {
   }) async {
     try {
       final res = await http.post(
-        Uri.parse(
-          '${Constants.backendUri}/auth/login',
-        ),
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: jsonEncode({
-          'email': email,
-          'password': password,
-        }),
+        Uri.parse('${Constants.backendUri}/auth/login'),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({'email': email, 'password': password}),
       );
 
       if (res.statusCode != 200) {
         throw jsonDecode(res.body)['error'];
       }
 
-      return UserModel.fromJson(res.body);
+      return UserModel.fromJson(jsonDecode(res.body) as Map<String, dynamic>);
     } catch (e) {
       throw e.toString();
     }
@@ -76,13 +61,8 @@ class AuthRemoteRepository {
       }
 
       final res = await http.post(
-        Uri.parse(
-          '${Constants.backendUri}/auth/tokenIsValid',
-        ),
-        headers: {
-          'Content-Type': 'application/json',
-          'x-auth-token': token,
-        },
+        Uri.parse('${Constants.backendUri}/auth/tokenIsValid'),
+        headers: {'Content-Type': 'application/json', 'x-auth-token': token},
       );
 
       if (res.statusCode != 200 || jsonDecode(res.body) == false) {
@@ -90,19 +70,16 @@ class AuthRemoteRepository {
       }
 
       final userResponse = await http.get(
-        Uri.parse(
-          '${Constants.backendUri}/auth',
-        ),
-        headers: {
-          'Content-Type': 'application/json',
-          'x-auth-token': token,
-        },
+        Uri.parse('${Constants.backendUri}/auth'),
+        headers: {'Content-Type': 'application/json', 'x-auth-token': token},
       );
 
       if (userResponse.statusCode != 200) {
         throw jsonDecode(userResponse.body)['error'];
       }
-      return UserModel.fromJson(userResponse.body);
+      return UserModel.fromJson(
+        jsonDecode(userResponse.body) as Map<String, dynamic>,
+      );
     } catch (e) {
       final user = await authLocalRepository.getUser();
       return user;

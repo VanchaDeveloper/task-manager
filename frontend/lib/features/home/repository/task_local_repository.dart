@@ -49,7 +49,7 @@ class TaskLocalRepository {
   Future<void> insertTask(TaskModel task) async {
     final db = await database;
     await db.delete(tableName, where: 'id = ?', whereArgs: [task.id]);
-    await db.insert(tableName, task.toMap());
+    await db.insert(tableName, task.toJson());
   }
 
   Future<void> insertTasks(List<TaskModel> tasks) async {
@@ -58,7 +58,7 @@ class TaskLocalRepository {
     for (final task in tasks) {
       batch.insert(
         tableName,
-        task.toMap(),
+        task.toJson(),
         conflictAlgorithm: ConflictAlgorithm.replace,
       );
     }
@@ -72,7 +72,7 @@ class TaskLocalRepository {
     if (result.isNotEmpty) {
       List<TaskModel> tasks = [];
       for (final elem in result) {
-        tasks.add(TaskModel.fromMap(elem));
+        tasks.add(TaskModel.fromJson(elem as Map<String, dynamic>));
       }
       return tasks;
     }
@@ -90,7 +90,7 @@ class TaskLocalRepository {
     if (result.isNotEmpty) {
       List<TaskModel> tasks = [];
       for (final elem in result) {
-        tasks.add(TaskModel.fromMap(elem));
+        tasks.add(TaskModel.fromJson(elem as Map<String, dynamic>));
       }
       return tasks;
     }

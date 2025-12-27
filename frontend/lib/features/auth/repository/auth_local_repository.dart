@@ -23,9 +23,7 @@ class AuthLocalRepository {
       version: 2,
       onUpgrade: (db, oldVersion, newVersion) async {
         if (oldVersion < newVersion) {
-          await db.execute(
-            'DROP TABLE $tableName',
-          );
+          await db.execute('DROP TABLE $tableName');
           db.execute('''
           CREATE TABLE $tableName(
             id TEXT PRIMARY KEY,
@@ -57,7 +55,7 @@ class AuthLocalRepository {
     final db = await database;
     await db.insert(
       tableName,
-      userModel.toMap(),
+      userModel.toJson(),
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
   }
@@ -66,7 +64,7 @@ class AuthLocalRepository {
     final db = await database;
     final result = await db.query(tableName, limit: 1);
     if (result.isNotEmpty) {
-      return UserModel.fromMap(result.first);
+      return UserModel.fromJson(result.first);
     }
 
     return null;

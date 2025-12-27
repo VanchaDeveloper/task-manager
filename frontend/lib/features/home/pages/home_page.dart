@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -10,10 +11,10 @@ import 'package:frontend/features/home/widgets/date_selector.dart';
 import 'package:frontend/features/home/widgets/task_card.dart';
 import 'package:intl/intl.dart';
 
+@RoutePage()
 class HomePage extends StatefulWidget {
-  static MaterialPageRoute route() => MaterialPageRoute(
-        builder: (context) => const HomePage(),
-      );
+  static MaterialPageRoute route() =>
+      MaterialPageRoute(builder: (context) => const HomePage());
   const HomePage({super.key});
 
   @override
@@ -46,23 +47,17 @@ class _HomePageState extends State<HomePage> {
             onPressed: () {
               Navigator.push(context, AddNewTaskPage.route());
             },
-            icon: const Icon(
-              CupertinoIcons.add,
-            ),
-          )
+            icon: const Icon(CupertinoIcons.add),
+          ),
         ],
       ),
       body: BlocBuilder<TasksCubit, TasksState>(
         builder: (context, state) {
           if (state is TasksLoading) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
+            return const Center(child: CircularProgressIndicator());
           }
           if (state is TasksError) {
-            return Center(
-              child: Text(state.error),
-            );
+            return Center(child: Text(state.error));
           }
 
           if (state is GetTasksSuccess) {
@@ -88,42 +83,38 @@ class _HomePageState extends State<HomePage> {
                 ),
                 Expanded(
                   child: ListView.builder(
-                      itemCount: tasks.length,
-                      itemBuilder: (context, index) {
-                        final task = tasks[index];
-                        return Row(
-                          children: [
-                            Expanded(
-                              child: TaskCard(
-                                color: task.color,
-                                headerText: task.title,
-                                descriptionText: task.description,
-                              ),
+                    itemCount: tasks.length,
+                    itemBuilder: (context, index) {
+                      final task = tasks[index];
+                      return Row(
+                        children: [
+                          Expanded(
+                            child: TaskCard(
+                              color: task.color,
+                              headerText: task.title,
+                              descriptionText: task.description,
                             ),
-                            Container(
-                              height: 10,
-                              width: 10,
-                              decoration: BoxDecoration(
-                                color: strengthenColor(
-                                  task.color,
-                                  0.69,
-                                ),
-                                shape: BoxShape.circle,
-                              ),
+                          ),
+                          Container(
+                            height: 10,
+                            width: 10,
+                            decoration: BoxDecoration(
+                              color: strengthenColor(task.color, 0.69),
+                              shape: BoxShape.circle,
                             ),
-                            Padding(
-                              padding: const EdgeInsets.all(12.0),
-                              child: Text(
-                                DateFormat.jm().format(task.dueAt),
-                                style: const TextStyle(
-                                  fontSize: 17,
-                                ),
-                              ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(12.0),
+                            child: Text(
+                              DateFormat.jm().format(task.dueAt),
+                              style: const TextStyle(fontSize: 17),
                             ),
-                          ],
-                        );
-                      }),
-                )
+                          ),
+                        ],
+                      );
+                    },
+                  ),
+                ),
               ],
             );
           }

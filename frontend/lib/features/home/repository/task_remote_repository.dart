@@ -19,25 +19,22 @@ class TaskRemoteRepository {
     required DateTime dueAt,
   }) async {
     try {
-      final res = await http.post(Uri.parse("${Constants.backendUri}/tasks"),
-          headers: {
-            'Content-Type': 'application/json',
-            'x-auth-token': token,
-          },
-          body: jsonEncode(
-            {
-              'title': title,
-              'description': description,
-              'hexColor': hexColor,
-              'dueAt': dueAt.toIso8601String(),
-            },
-          ));
+      final res = await http.post(
+        Uri.parse("${Constants.backendUri}/tasks"),
+        headers: {'Content-Type': 'application/json', 'x-auth-token': token},
+        body: jsonEncode({
+          'title': title,
+          'description': description,
+          'hexColor': hexColor,
+          'dueAt': dueAt.toIso8601String(),
+        }),
+      );
 
       if (res.statusCode != 201) {
         throw jsonDecode(res.body)['error'];
       }
 
-      return TaskModel.fromJson(res.body);
+      return TaskModel.fromJson(jsonDecode(res.body) as Map<String, dynamic>);
     } catch (e) {
       try {
         final taskModel = TaskModel(
@@ -63,10 +60,7 @@ class TaskRemoteRepository {
     try {
       final res = await http.get(
         Uri.parse("${Constants.backendUri}/tasks"),
-        headers: {
-          'Content-Type': 'application/json',
-          'x-auth-token': token,
-        },
+        headers: {'Content-Type': 'application/json', 'x-auth-token': token},
       );
 
       if (res.statusCode != 200) {
@@ -77,7 +71,7 @@ class TaskRemoteRepository {
       List<TaskModel> tasksList = [];
 
       for (var elem in listOfTasks) {
-        tasksList.add(TaskModel.fromMap(elem));
+        tasksList.add(TaskModel.fromJson(elem as Map<String, dynamic>));
       }
 
       await taskLocalRepository.insertTasks(tasksList);
@@ -99,14 +93,11 @@ class TaskRemoteRepository {
     try {
       final taskListInMap = [];
       for (final task in tasks) {
-        taskListInMap.add(task.toMap());
+        taskListInMap.add(task.toJson());
       }
       final res = await http.post(
         Uri.parse("${Constants.backendUri}/tasks/sync"),
-        headers: {
-          'Content-Type': 'application/json',
-          'x-auth-token': token,
-        },
+        headers: {'Content-Type': 'application/json', 'x-auth-token': token},
         body: jsonEncode(taskListInMap),
       );
 
