@@ -29,6 +29,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  final appRouter = AppRouter();
 
   @override
   void initState() {
@@ -76,7 +77,7 @@ class _MyAppState extends State<MyApp> {
               ),
               useMaterial3: true,
             ),
-            routerDelegate: AppRouter().delegate(),
+            routerDelegate: appRouter.delegate(),
             routeInformationParser: appRouter.defaultRouteParser(),
             localizationsDelegates: const [
               GlobalMaterialLocalizations.delegate,
