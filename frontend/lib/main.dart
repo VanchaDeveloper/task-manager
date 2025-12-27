@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:frontend/core/di/di.config.dart';
 import 'package:frontend/features/auth/cubit/auth_cubit.dart';
 import 'package:frontend/features/home/cubit/tasks_cubit.dart';
 
-import 'package:frontend/core/di/injection.dart' as di;
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:frontend/router/app_router.dart';
 
-void main() {
-  di.configureDependencies();
-
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized(); // For async setup
+  await configureDependencies(); //
   runApp(
     MultiBlocProvider(
       providers: [

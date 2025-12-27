@@ -1,7 +1,9 @@
 import 'package:frontend/models/task_model.dart';
+import 'package:injectable/injectable.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
+@singleton
 class TaskLocalRepository {
   String tableName = "tasks";
 

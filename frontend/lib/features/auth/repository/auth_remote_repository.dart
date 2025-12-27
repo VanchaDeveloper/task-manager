@@ -5,7 +5,9 @@ import 'package:frontend/core/services/sp_service.dart';
 import 'package:frontend/features/auth/repository/auth_local_repository.dart';
 import 'package:frontend/models/user_model.dart';
 import 'package:http/http.dart' as http;
+import 'package:injectable/injectable.dart';
 
+@singleton
 class AuthRemoteRepository {
   final spService = SpService();
   final authLocalRepository = AuthLocalRepository();

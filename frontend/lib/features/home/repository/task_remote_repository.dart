@@ -5,8 +5,10 @@ import 'package:frontend/core/constants/utils.dart';
 import 'package:frontend/features/home/repository/task_local_repository.dart';
 import 'package:frontend/models/task_model.dart';
 import 'package:http/http.dart' as http;
+import 'package:injectable/injectable.dart';
 import 'package:uuid/uuid.dart';
 
+@singleton
 class TaskRemoteRepository {
   final taskLocalRepository = TaskLocalRepository();
 

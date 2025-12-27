@@ -1,22 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:frontend/core/constants/utils.dart';
+import 'package:frontend/core/di/di.config.dart';
 import 'package:frontend/features/home/repository/task_local_repository.dart';
 import 'package:frontend/features/home/repository/task_remote_repository.dart';
-import 'package:frontend/core/di/injection.dart' show getIt;
 import 'package:frontend/models/task_model.dart';
+import 'package:injectable/injectable.dart';
 
 part 'tasks_state.dart';
 
+@singleton
 class TasksCubit extends Cubit<TasksState> {
-  TasksCubit(
-      {TaskRemoteRepository? taskRemoteRepository,
-      TaskLocalRepository? taskLocalRepository})
-      : taskRemoteRepository =
-            taskRemoteRepository ?? getIt<TaskRemoteRepository>(),
-        taskLocalRepository =
-            taskLocalRepository ?? getIt<TaskLocalRepository>(),
-        super(TasksInitial());
+  TasksCubit({
+    TaskRemoteRepository? taskRemoteRepository,
+    TaskLocalRepository? taskLocalRepository,
+  }) : taskRemoteRepository =
+           taskRemoteRepository ?? getIt<TaskRemoteRepository>(),
+       taskLocalRepository =
+           taskLocalRepository ?? getIt<TaskLocalRepository>(),
+       super(TasksInitial());
 
   final TaskRemoteRepository taskRemoteRepository;
   final TaskLocalRepository taskLocalRepository;
@@ -66,7 +68,9 @@ class TasksCubit extends Cubit<TasksState> {
 
     // talk to our postgresql db to add the new task
     final isSynced = await taskRemoteRepository.syncTasks(
-        token: token, tasks: unsyncedTasks);
+      token: token,
+      tasks: unsyncedTasks,
+    );
     // change the tasks that were added to the db from 0 to 1
     if (isSynced) {
       for (final task in unsyncedTasks) {

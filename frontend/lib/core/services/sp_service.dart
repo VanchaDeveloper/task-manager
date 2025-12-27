@@ -1,5 +1,7 @@
+import 'package:injectable/injectable.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+@singleton
 class SpService {
   Future<void> setToken(String token) async {
     final prefs = await SharedPreferences.getInstance();

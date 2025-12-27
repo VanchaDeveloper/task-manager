@@ -1,23 +1,25 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:frontend/core/di/di.config.dart';
 import 'package:frontend/core/services/sp_service.dart';
 import 'package:frontend/features/auth/repository/auth_local_repository.dart';
 import 'package:frontend/features/auth/repository/auth_remote_repository.dart';
-import 'package:frontend/core/di/injection.dart' show getIt;
 import 'package:frontend/models/user_model.dart';
+import 'package:injectable/injectable.dart';
 
 part 'auth_state.dart';
 
+@singleton
 class AuthCubit extends Cubit<AuthState> {
-  AuthCubit(
-      {AuthRemoteRepository? authRemoteRepository,
-      AuthLocalRepository? authLocalRepository,
-      SpService? spService})
-      : authRemoteRepository =
-            authRemoteRepository ?? getIt<AuthRemoteRepository>(),
-        authLocalRepository =
-            authLocalRepository ?? getIt<AuthLocalRepository>(),
-        spService = spService ?? getIt<SpService>(),
-        super(AuthInitial());
+  AuthCubit({
+    AuthRemoteRepository? authRemoteRepository,
+    AuthLocalRepository? authLocalRepository,
+    SpService? spService,
+  }) : authRemoteRepository =
+           authRemoteRepository ?? getIt<AuthRemoteRepository>(),
+       authLocalRepository =
+           authLocalRepository ?? getIt<AuthLocalRepository>(),
+       spService = spService ?? getIt<SpService>(),
+       super(AuthInitial());
 
   final AuthRemoteRepository authRemoteRepository;
   final AuthLocalRepository authLocalRepository;
@@ -57,10 +59,7 @@ class AuthCubit extends Cubit<AuthState> {
     }
   }
 
-  void login({
-    required String email,
-    required String password,
-  }) async {
+  void login({required String email, required String password}) async {
     try {
       emit(AuthLoading());
       final userModel = await authRemoteRepository.login(
