@@ -789,5 +789,59 @@ I can now:
 
 Just reply with the number 👌
 
+---
+
+# Setup & Run 🚀
+
+## Prerequisites ✅
+
+- Flutter SDK (https://flutter.dev)
+- An Android/iOS simulator or a real device
+- (Optional) Android Studio / Xcode for emulators
+
+## Quick start (development)
+
+1. Make sure the backend is running and the base URL is correct. The default value is in `lib/core/constants/constants.dart`:
+
+   - Android emulator: `http://10.0.2.2:8000`
+   - iOS simulator / web: `http://localhost:8000`
+
+2. Install dependencies:
+
+```bash
+cd frontend
+flutter pub get
+```
+
+3. Generate code (auto_route / json_serializable / freezed / injectable):
+
+```bash
+flutter pub run build_runner build --delete-conflicting-outputs
+# or for watch mode
+flutter pub run build_runner watch --delete-conflicting-outputs
+```
+
+4. Run the app:
+
+```bash
+flutter run
+```
+
+## Build (release)
+
+```bash
+# Android
+flutter build apk
+# Web
+flutter build web
+```
+
+## Troubleshooting ⚠️
+
+- On Android emulators use `10.0.2.2` to reach services running on the host machine.
+- If code generation fails, try cleaning (`rm -rf .dart_tool build`) and re-run build_runner.
+
+---
+
 npm run dev
 docker-compose up -d --build
